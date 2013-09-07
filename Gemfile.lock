@@ -1,6 +1,9 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    active_support (3.0.0)
+      activesupport (= 3.0.0)
+    activesupport (3.0.0)
     awesome_print (1.1.0)
     coderay (1.0.8)
     method_source (0.8.1)
@@ -14,5 +17,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_support
   awesome_print
   pry
