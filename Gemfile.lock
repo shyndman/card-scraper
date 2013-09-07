@@ -4,9 +4,6 @@ GEM
     awesome_print (1.1.0)
     coderay (1.0.8)
     method_source (0.8.1)
-    mini_portile (0.5.1)
-    nokogiri (1.6.0)
-      mini_portile (~> 0.5.0)
     pry (0.9.11.2)
       coderay (~> 1.0.5)
       method_source (~> 0.8)
@@ -18,5 +15,4 @@ PLATFORMS
 
 DEPENDENCIES
   awesome_print
-  nokogiri
   pry
