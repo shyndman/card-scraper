@@ -4,6 +4,7 @@ Bundler.setup
 require 'open-uri'
 require 'json'
 require 'awesome_print'
+require 'date'
 
 class String
   def dehumanize
@@ -14,7 +15,8 @@ end
 def download_card_image(card)
   puts "Downloading card image for #{card['title']}"
 
-  local_img_path = "img/#{ card['title'].dehumanize }.png"
+  file_name = "#{card['title'].dehumanize}.png"
+  local_img_path = "img/#{ file_name }"
   image_url = "http://netrunnercards.info/#{ card['imagesrc'] }"
 
   open(image_url) do |input|
@@ -23,23 +25,42 @@ def download_card_image(card)
     end
   end
 
-  card['imagesrc'] = local_img_path
+  file_name
 end
 
 cards = []
 
 # Grab card meta
 
+date_term = "r%3C#{Date.today.to_s}" # %3C is <
+
 ['d:r', 'd:c'].each do |term|
-  runner_cards = open("http://netrunnercards.info/api/search/#{term}") do |f|
+  runner_cards = open("http://netrunnercards.info/api/search/#{term}%20#{date_term}") do |f|
     cards.concat JSON.parse(f.read)
   end
 end
 
+# Get a hash of card titles to their CardGameDB URLs
+
+cgdb_card_urls = {}
+CGDB_BASE_URL = 'http://www.cardgamedb.com/index.php/netrunner/android-netrunner-card-spoilers/_/'
+
+# NOTE file scraped by sniffing traffic between the browser and CardGameDB
+open 'cardgamedb-cards.json' do |io|
+  cgdb_cards = JSON.load io
+  cgdb_cards.each do |card|
+    cgdb_card_urls[card['name']] = "#{CGDB_BASE_URL}#{card['furl']}"
+  end
+end
+
+
 # Download images
 
 cards.each do |card|
-  download_card_image(card)
+  img_file_name = download_card_image(card)
+  card['imagesrc'] = "/images/cards/#{img_file_name}"
+  card['cgdb_url'] = cgdb_card_urls[card['title']]
+  card['nr_db_url'] = card.delete 'url'
 end
 
 open('cards.json', 'w') do |f|
