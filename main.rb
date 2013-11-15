@@ -64,7 +64,7 @@ cards.each do |card|
 
   title = I18n.transliterate(card['title']).downcase
 
-  # Type correction
+  # Typo correction
   title = 'alix t4lb07' if title == 'alix t4lbo7'
 
   if cgdb_card_urls[title].nil?
