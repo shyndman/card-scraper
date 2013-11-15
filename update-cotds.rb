@@ -86,12 +86,12 @@ stories.each do |s|
       next
     end
 
-    cotds << {
+    cotds.unshift({
       'id' => s_data['id'],
       'title' => s_data['title'],
       'url' => s_data['url'],
       'created' => Time.at(s_data['created_utc']).utc.iso8601
-    }
+    })
   end
 end
 
