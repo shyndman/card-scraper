@@ -5,6 +5,8 @@ require 'open-uri'
 require 'json'
 require 'awesome_print'
 require 'date'
+require 'cgi'
+require 'i18n'
 
 class String
   def dehumanize
@@ -49,7 +51,7 @@ CGDB_BASE_URL = 'http://www.cardgamedb.com/index.php/netrunner/android-netrunner
 open 'cardgamedb-cards.json' do |io|
   cgdb_cards = JSON.load io
   cgdb_cards.each do |card|
-    cgdb_card_urls[card['name']] = "#{CGDB_BASE_URL}#{card['furl']}"
+    cgdb_card_urls[CGI.unescapeHTML(card['name'].downcase)] = "#{CGDB_BASE_URL}#{card['furl']}"
   end
 end
 
@@ -59,7 +61,17 @@ end
 cards.each do |card|
   img_file_name = download_card_image(card)
   card['imagesrc'] = "/images/cards/#{img_file_name}"
-  card['cgdb_url'] = cgdb_card_urls[card['title']]
+
+  title = I18n.transliterate(card['title']).downcase
+
+  # Type correction
+  title = 'alix t4lb07' if title == 'alix t4lbo7'
+
+  if cgdb_card_urls[title].nil?
+    raise "No CGDB URL found for #{card['title']}"
+  end
+
+  card['cgdb_url'] = cgdb_card_urls[title]
   card['nr_db_url'] = card.delete 'url'
 end
 
