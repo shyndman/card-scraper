@@ -27,7 +27,7 @@ cards = JSON.load(open('reddit-cotds.json'))
 
 # and mapify them
 cards_by_title = {}
-cards.each { |c| cards_by_title[I18n.transliterate(c['title']).downcase] = c  }
+cards['cards'].each { |c| cards_by_title[I18n.transliterate(c['title']).downcase] = c }
 
 # Ask which stories are relevant
 stories.each do |s|
@@ -79,7 +79,7 @@ stories.each do |s|
 
   # Modify cards
   card_titles.each do |title|
-    cotds = cards_by_title[I18n.transliterate(title)]['reddit_cotd'] ||= []
+    cotds = cards_by_title[I18n.transliterate(title)]['reddit_cotds'] ||= []
 
     if cotds.any? { |cotd| cotd['id'] == s_data['id'] }
       puts 'Duplicate found. Skipping...'
