@@ -37,7 +37,8 @@ cards = []
 set_term = "e%3Amt"
 
 ['d:r', 'd:c'].each do |term|
-  runner_cards = open("http://netrunnercards.info/api/search/#{term}%20#{date_term}") do |f|
+  puts "http://netrunnerdb.com/api/search/#{term}%20#{set_term}"
+  runner_cards = open("http://netrunnerdb.com/api/search/#{term}%20#{set_term}") do |f|
     cards.concat JSON.parse(f.read)
   end
 end
@@ -68,7 +69,7 @@ cards.each do |card|
   title = 'alix t4lb07' if title == 'alix t4lbo7'
 
   if cgdb_card_urls[title].nil?
-    raise "No CGDB URL found for #{card['title']}"
+    puts "No CGDB URL found for #{card['title']}"
   end
 
   card['cgdb_url'] = cgdb_card_urls[title]
