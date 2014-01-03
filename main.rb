@@ -34,7 +34,7 @@ cards = []
 
 # Grab card meta
 
-date_term = "r%3C#{Date.today.to_s}" # %3C is <
+set_term = "e%3Amt"
 
 ['d:r', 'd:c'].each do |term|
   runner_cards = open("http://netrunnercards.info/api/search/#{term}%20#{date_term}") do |f|
