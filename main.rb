@@ -73,7 +73,7 @@ cards.each do |card|
   end
 
   card['cgdb_url'] = cgdb_card_urls[title]
-  card['nr_db_url'] = card.delete 'url'
+  card['nrdb_url'] = card.delete 'url'
 end
 
 open('cards.json', 'w') do |f|
