@@ -34,7 +34,7 @@ cards = []
 
 # Grab card meta
 
-set_term = "e%3Amt"
+set_term = "e%3Atc"
 
 ['d:r', 'd:c'].each do |term|
   puts "http://netrunnerdb.com/api/search/#{term}%20#{set_term}"
