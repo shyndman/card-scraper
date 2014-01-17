@@ -80,6 +80,7 @@ cards.each do |card|
   card.delete 'last-modified'
   card.delete 'faction_code'
   card.delete 'type_code'
+  card.delete 'code'
 end
 
 open('cards.json', 'w') do |f|
