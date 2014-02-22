@@ -17,7 +17,7 @@ end
 def download_card_image(card)
   puts "Downloading card image for #{card['title']}"
 
-  file_name = "#{card['title'].dehumanize}.png"
+  file_name = "#{ card['title'].dehumanize }.png"
   local_img_path = "img/#{ file_name }"
   image_url = "http://netrunnercards.info/#{ card['imagesrc'] }"
 
@@ -34,13 +34,11 @@ cards = []
 
 # Grab card meta
 
-set_term = "e%3Atc"
-
-['d:r', 'd:c'].each do |term|
-  puts "http://netrunnerdb.com/api/search/#{term}%20#{set_term}"
-  runner_cards = open("http://netrunnerdb.com/api/search/#{term}%20#{set_term}") do |f|
-    cards.concat JSON.parse(f.read)
-  end
+set_term = "hap"
+url = "http://netrunnerdb.com/api/set/#{set_term}"
+puts url
+runner_cards = open(url) do |f|
+  cards.concat JSON.parse(f.read)
 end
 
 # Get a hash of card titles to their CardGameDB URLs
@@ -81,6 +79,9 @@ cards.each do |card|
   card.delete 'faction_code'
   card.delete 'type_code'
   card.delete 'code'
+  card.delete 'opinions'
+  card.delete 'nbopinions'
+  card.delete 'largeimagesrc'
 end
 
 open('cards.json', 'w') do |f|
