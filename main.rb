@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 require 'bundler'
 Bundler.setup
 
@@ -34,7 +36,7 @@ cards = []
 
 # Grab card meta
 
-set_term = "hap"
+set_term = 'dt'
 url = "http://netrunnerdb.com/api/set/#{set_term}"
 puts url
 runner_cards = open(url) do |f|
