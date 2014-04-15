@@ -32,12 +32,12 @@ def download_card_image(card)
   file_name
 end
 
+SET_TERM = 'hap'
 cards = []
 
 # Grab card meta
 
-set_term = 'dt'
-url = "http://netrunnerdb.com/api/set/#{set_term}"
+url = "http://netrunnerdb.com/api/set/#{SET_TERM}"
 puts url
 runner_cards = open(url) do |f|
   cards.concat JSON.parse(f.read)
